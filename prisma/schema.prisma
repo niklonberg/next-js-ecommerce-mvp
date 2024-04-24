@@ -20,6 +20,7 @@ model Product {
   purchasable   Boolean   @default(true)
   filePath      String
   imagePath     String
+  orders Order[]
 }
 
 model User {
@@ -37,5 +38,6 @@ model Order {
   updatedAt         DateTime  @updatedAt
   userId            String
   productId         String
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
