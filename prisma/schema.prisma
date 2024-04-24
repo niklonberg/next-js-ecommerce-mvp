@@ -27,8 +27,15 @@ model User {
   email         String    @unique
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  orders Order[]
 }
 
 model Order {
-
+  id                String    @id @default(uuid())
+  pricePaidInCents  Int
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  userId            String
+  productId         String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
