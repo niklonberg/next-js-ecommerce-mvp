@@ -6,18 +6,34 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+type DashboardCardProps = {
+  title: string;
+  subtitle: string;
+  content: string;
+};
+
+function DashboardCards({ title, subtitle, content }: DashboardCardProps) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{subtitle}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>{content}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function AdminDashboard() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Sales</CardTitle>
-          <CardDescription>placeholder desc</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>This is the card content!</p>
-        </CardContent>
-      </Card>
+      <DashboardCards
+        title="Card One"
+        subtitle="card description"
+        content="this is the body text"
+      />
     </div>
   );
 }
