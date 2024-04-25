@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import db from "@/db/db";
 
 type DashboardCardProps = {
   title: string;
@@ -24,6 +25,20 @@ function DashboardCards({ title, subtitle, content }: DashboardCardProps) {
       </CardContent>
     </Card>
   );
+}
+
+async function getSalesData() {
+  const salesData = await db.order.aggregate({
+    _sum: { pricePaidInCents: true },
+    _count: true,
+  });
+
+  const salesInDollars = (salesData._sum.pricePaidInCents || 0) / 100;
+
+  return {
+    amount: salesInDollars,
+    numberOfSales: salesData._count,
+  };
 }
 
 export default function AdminDashboard() {
