@@ -42,6 +42,23 @@ async function getSalesData() {
   };
 }
 
+async function getCustomerData() {
+  const [customerCount, orderData] = await Promise.all([
+    db.user.count(),
+    db.order.aggregate({
+      _sum: { pricePaidInCents: true },
+    }),
+  ]);
+
+  return {
+    customerCount,
+    averageSalesPerCustomer:
+      customerCount === 0
+        ? 0
+        : (orderData._sum.pricePaidInCents || 0) / customerCount / 100,
+  };
+}
+
 export default async function AdminDashboard() {
   const salesData = await getSalesData();
   return (
@@ -51,6 +68,7 @@ export default async function AdminDashboard() {
         subtitle={`${formatNumber(salesData.numberOfSales)} orders`}
         content={formatCurrency(salesData.amount)}
       />
+      <DashboardCard title="Customers" />
     </div>
   );
 }
