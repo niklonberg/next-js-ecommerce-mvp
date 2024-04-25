@@ -60,14 +60,14 @@ async function getCustomerData() {
 }
 
 async function getProductAvailabilityData() {
-  const [isAvailable, isUnavailable] = await Promise.all([
+  const [activeProductCount, inactiveProductCount] = await Promise.all([
     db.product.count({ where: { purchasable: true } }),
     db.product.count({ where: { purchasable: false } }),
   ]);
 
   return {
-    isAvailable,
-    isUnavailable,
+    activeProductCount,
+    inactiveProductCount,
   };
 }
 
