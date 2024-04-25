@@ -72,9 +72,10 @@ async function getProductAvailabilityData() {
 }
 
 export default async function AdminDashboard() {
-  const [salesData, customerData] = await Promise.all([
+  const [salesData, customerData, productData] = await Promise.all([
     getSalesData(),
     getCustomerData(),
+    getProductAvailabilityData(),
   ]);
 
   return (
@@ -91,7 +92,11 @@ export default async function AdminDashboard() {
         )} Average sales per customer`}
         content={`${formatNumber(customerData.customerCount)} customers`}
       />
-      <DashboardCard />
+      <DashboardCard
+        title="Products"
+        subtitle={`${formatNumber(productData.inactiveProductCount)} inactive`}
+        content={formatNumber(productData.activeProductCount)}
+      />
     </div>
   );
 }
