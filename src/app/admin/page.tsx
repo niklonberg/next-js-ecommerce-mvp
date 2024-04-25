@@ -59,6 +59,18 @@ async function getCustomerData() {
   };
 }
 
+async function getProductAvailabilityData() {
+  const [isAvailable, isUnavailable] = await Promise.all([
+    db.product.count({ where: { purchasable: true } }),
+    db.product.count({ where: { purchasable: false } }),
+  ]);
+
+  return {
+    isAvailable,
+    isUnavailable,
+  };
+}
+
 export default async function AdminDashboard() {
   const [salesData, customerData] = await Promise.all([
     getSalesData(),
@@ -79,6 +91,7 @@ export default async function AdminDashboard() {
         )} Average sales per customer`}
         content={`${formatNumber(customerData.customerCount)} customers`}
       />
+      <DashboardCard />
     </div>
   );
 }
