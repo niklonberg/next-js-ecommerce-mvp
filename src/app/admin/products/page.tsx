@@ -13,33 +13,46 @@ import {
 
 export default function AdminProducts() {
   return (
-    <div className="flex justify-between items-center gap-4">
-      <PageHeader>Products</PageHeader>
-      <Button asChild>
-        <Link href="/admin/products/new">Add Product</Link>
-      </Button>
-    </div>
+    <>
+      <div className="flex justify-between items-center gap-4">
+        <PageHeader>Products</PageHeader>
+        <Button asChild>
+          <Link href="/admin/products/new">Add Product</Link>
+        </Button>
+      </div>
+      <ProductsTable />
+    </>
   );
 }
 
 function ProductsTable() {
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>Current products.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>
+            <span className="sr-only">Available for purchase</span>
+          </TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Created</TableHead>
+          <TableHead>Updated</TableHead>
+          <TableHead>Orders</TableHead>
+          <TableHead>Price</TableHead>
+          <TableHead>
+            <span className="sr-only">Actions</span>
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         <TableRow>
-          <TableCell className="font-medium">INV001</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">$250.00</TableCell>
+          <TableCell></TableCell>
+          <TableCell>How to play tag</TableCell>
+          <TableCell>01/01/24</TableCell>
+          <TableCell>04/01/24</TableCell>
+          <TableCell className="text-center">157</TableCell>
+          <TableCell className="text-right">$20</TableCell>
+          <TableCell></TableCell>
         </TableRow>
       </TableBody>
     </Table>
