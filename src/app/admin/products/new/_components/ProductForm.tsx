@@ -6,12 +6,13 @@ import { Label } from "@/components/ui/label";
 import { formatCurrency } from "@/lib/formatters";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { addProduct } from "@/app/admin/_actions/products";
 
 export function ProductForm() {
-  const [priceInCents, setPriceInCents] = React.useState<number>();
+  const [priceInCents, setPriceInCents] = React.useState<number>(0);
 
   return (
-    <form className="space-y-6">
+    <form action={addProduct} className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
         <Input type="text" id="name" name="name" required />
@@ -24,7 +25,7 @@ export function ProductForm() {
           name="priceInCents"
           required
           value={priceInCents}
-          onChange={(e) => setPriceInCents(Number(e.target.value) || undefined)}
+          onChange={(e) => setPriceInCents(Number(e.target.value))}
         />
       </div>
       <div className="text-muted-foreground">
@@ -45,7 +46,7 @@ export function ProductForm() {
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="image">File</Label>
+        <Label htmlFor="image">Image</Label>
         <Input
           className="hover:cursor-pointer"
           type="file"
