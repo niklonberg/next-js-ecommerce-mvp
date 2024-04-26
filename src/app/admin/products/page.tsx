@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import db from "@/db/db";
 
 export default function AdminProducts() {
   return (
@@ -25,7 +26,11 @@ export default function AdminProducts() {
   );
 }
 
-function ProductsTable() {
+async function ProductsTable() {
+  const products = await db.product.findMany();
+
+  if (products.length === 0) return <p>no products</p>;
+
   return (
     <Table>
       <TableCaption>Current products.</TableCaption>
