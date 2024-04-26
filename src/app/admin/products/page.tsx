@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import db from "@/db/db";
+import { CheckCircle2, XCircle } from "lucide-react";
 
 export default function AdminProducts() {
   return (
@@ -65,9 +66,11 @@ async function ProductsTable() {
       <TableBody>
         {products.map((product) => (
           <TableRow key={product.id}>
-            <TableCell></TableCell>
+            <TableCell>
+              {product.purchasable ? <CheckCircle2 /> : <XCircle />}
+            </TableCell>
             <TableCell>{product.name}</TableCell>
-            <TableCell>{product.createdAt}</TableCell>
+            <TableCell>{}</TableCell>
             <TableCell>04/01/24</TableCell>
             <TableCell className="text-center">157</TableCell>
             <TableCell className="text-right">$20</TableCell>
