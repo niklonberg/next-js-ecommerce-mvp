@@ -23,7 +23,7 @@ import {
 import {
   DeleteDropdownItem,
   ToggleDropdownItemPurchasable,
-} from "./new/_components/ProductActions";
+} from "./_components/ProductActions";
 
 export default function AdminProducts() {
   return (
