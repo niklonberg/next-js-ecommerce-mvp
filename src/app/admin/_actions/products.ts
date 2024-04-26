@@ -51,3 +51,10 @@ export async function addProduct(_prevState: unknown, formData: FormData) {
 
   redirect("/admin/products");
 }
+
+export async function toggleProductPurchasable(
+  id: string,
+  purchasable: boolean
+) {
+  await db.product.update({ where: { id }, data: { purchasable } });
+}
