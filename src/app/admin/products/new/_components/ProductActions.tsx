@@ -1,4 +1,7 @@
-import { toggleProductPurchasable } from "@/app/admin/_actions/products";
+import {
+  deleteProduct,
+  toggleProductPurchasable,
+} from "@/app/admin/_actions/products";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useTransition } from "react";
 
@@ -24,4 +27,24 @@ export function ToggleDropdownItemPurchasable({
   );
 }
 
-export function DeleteDropdownItem() {}
+export function DeleteDropdownItem({
+  id,
+  disabled,
+}: {
+  id: string;
+  disabled: boolean;
+}) {
+  const [isPending, startTransition] = useTransition();
+  return (
+    <DropdownMenuItem
+      disabled={isPending}
+      onClick={() =>
+        startTransition(async () => {
+          await deleteProduct(id);
+        })
+      }
+    >
+      {disabled ? "Deactivate" : "Activate"}
+    </DropdownMenuItem>
+  );
+}
