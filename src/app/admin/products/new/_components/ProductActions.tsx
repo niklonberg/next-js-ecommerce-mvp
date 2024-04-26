@@ -46,7 +46,7 @@ export function DeleteDropdownItem({
         })
       }
     >
-      {disabled ? "Deactivate" : "Activate"}
+      Delete
     </DropdownMenuItem>
   );
 }
