@@ -8,10 +8,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { addProduct } from "@/app/admin/_actions/products";
 import { useFormStatus, useFormState } from "react-dom";
+import { Product } from "@prisma/client";
 
-export function ProductForm() {
+export function ProductForm({ product }: { product?: Product | null }) {
   const [error, action] = useFormState(addProduct, {});
-  const [priceInCents, setPriceInCents] = React.useState<number>(0);
+  const [priceInCents, setPriceInCents] = React.useState<number | undefined>(
+    product?.priceInCents
+  );
 
   return (
     <form action={action} className="space-y-6">
@@ -28,7 +31,7 @@ export function ProductForm() {
           name="priceInCents"
           required
           value={priceInCents}
-          onChange={(e) => setPriceInCents(Number(e.target.value))}
+          onChange={(e) => setPriceInCents(Number(e.target.value) || undefined)}
         />
         {error.priceInCents && (
           <div className="text-destructive">{error.priceInCents}</div>
