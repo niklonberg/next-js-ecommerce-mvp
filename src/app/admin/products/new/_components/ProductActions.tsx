@@ -5,6 +5,7 @@ import {
   toggleProductPurchasable,
 } from "@/app/admin/_actions/products";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 
 export function ToggleDropdownItemPurchasable({
@@ -15,12 +16,14 @@ export function ToggleDropdownItemPurchasable({
   purchasable: boolean;
 }) {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <DropdownMenuItem
       disabled={isPending}
       onClick={() =>
         startTransition(async () => {
           await toggleProductPurchasable(id, !purchasable);
+          router.refresh();
         })
       }
     >
@@ -37,6 +40,7 @@ export function DeleteDropdownItem({
   disabled: boolean;
 }) {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <DropdownMenuItem
       variant="destructive"
@@ -44,6 +48,7 @@ export function DeleteDropdownItem({
       onClick={() =>
         startTransition(async () => {
           await deleteProduct(id);
+          router.refresh();
         })
       }
     >
