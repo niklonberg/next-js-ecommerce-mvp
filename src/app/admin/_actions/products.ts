@@ -12,7 +12,7 @@ z.object({
   priceInCents: z.coerce.number().int().min(1),
   description: z.string().min(1),
   file: fileSchema.refine((file) => file.size > 0, "Filesize is too low"),
-  image: imageSchema,
+  image: imageSchema.refine((file) => file.size > 0, "Filesize is too low"),
 });
 
 export async function addProduct(formData: FormData) {
