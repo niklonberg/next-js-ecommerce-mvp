@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 import db from "@/db/db";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
-import { waitTest } from "@/lib/utils";
 
 type DashboardCardProps = {
   title: string;
@@ -34,8 +33,6 @@ async function getSalesData() {
     _sum: { pricePaidInCents: true },
     _count: true,
   });
-
-  await waitTest(2000);
 
   const salesInDollars = (salesData._sum.pricePaidInCents || 0) / 100;
 
