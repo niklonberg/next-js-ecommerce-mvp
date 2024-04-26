@@ -81,12 +81,12 @@ async function ProductsTable() {
             <TableCell>
               {product.purchasable ? (
                 <>
-                  <CheckCircle2 />
+                  <CheckCircle2 className="stroke-green-700" />
                   <span className="sr-only">Purchasable</span>
                 </>
               ) : (
                 <>
-                  <XCircle />
+                  <XCircle className="stroke-destructive" />
                   <span className="sr-only">Not purchasable</span>
                 </>
               )}
