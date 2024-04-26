@@ -67,11 +67,21 @@ async function ProductsTable() {
         {products.map((product) => (
           <TableRow key={product.id}>
             <TableCell>
-              {product.purchasable ? <CheckCircle2 /> : <XCircle />}
+              {product.purchasable ? (
+                <>
+                  <CheckCircle2 />
+                  <span className="sr-only">Purchasable</span>
+                </>
+              ) : (
+                <>
+                  <XCircle />
+                  <span className="sr-only">Not purchasable</span>
+                </>
+              )}
             </TableCell>
             <TableCell>{product.name}</TableCell>
-            <TableCell>{}</TableCell>
-            <TableCell>04/01/24</TableCell>
+            <TableCell>{formatDateISO(product.createdAt)}</TableCell>
+            <TableCell>{formatDateISO(product.updatedAt)}</TableCell>
             <TableCell className="text-center">157</TableCell>
             <TableCell className="text-right">$20</TableCell>
             <TableCell></TableCell>
@@ -80,4 +90,12 @@ async function ProductsTable() {
       </TableBody>
     </Table>
   );
+}
+
+function formatDateISO(dateISO: Date) {
+  return dateISO.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  });
 }
