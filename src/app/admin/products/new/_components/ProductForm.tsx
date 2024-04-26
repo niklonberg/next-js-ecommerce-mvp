@@ -7,6 +7,7 @@ import { formatCurrency } from "@/lib/formatters";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { addProduct } from "@/app/admin/_actions/products";
+import { useFormStatus } from "react-dom";
 
 export function ProductForm() {
   const [priceInCents, setPriceInCents] = React.useState<number>(0);
@@ -55,7 +56,16 @@ export function ProductForm() {
           required
         />
       </div>
-      <Button type="submit">Save</Button>
+      <SubmitButton />
     </form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? "Saving..." : "Save"}
+    </Button>
   );
 }
