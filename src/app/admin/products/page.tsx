@@ -11,7 +11,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import db from "@/db/db";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
+import { formatCurrency } from "@/lib/formatters";
 
 export default function AdminProducts() {
   return (
@@ -82,9 +83,16 @@ async function ProductsTable() {
             <TableCell>{product.name}</TableCell>
             <TableCell>{formatDateISO(product.createdAt)}</TableCell>
             <TableCell>{formatDateISO(product.updatedAt)}</TableCell>
-            <TableCell className="text-center">157</TableCell>
-            <TableCell className="text-right">$20</TableCell>
-            <TableCell></TableCell>
+            <TableCell className="text-center">
+              {product._count.orders}
+            </TableCell>
+            <TableCell className="text-right">
+              {formatCurrency(product.priceInCents / 100)}
+            </TableCell>
+            <TableCell>
+              <MoreVertical />
+              <span className="sr-only">Actions</span>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
