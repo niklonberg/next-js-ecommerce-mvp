@@ -27,9 +27,21 @@ export default function AdminProducts() {
 }
 
 async function ProductsTable() {
-  const products = await db.product.findMany();
+  const products = await db.product.findMany({
+    select: {
+      purchasable: true,
+      name: true,
+      createdAt: true,
+      updatedAt: true,
+      _count: { select: { orders: true } },
+      priceInCents: true,
+    },
+    orderBy: { name: "asc" },
+  });
 
-  if (products.length === 0) return <p>no products</p>;
+  console.log(products);
+
+  if (products.length === 0) return <p>No products found</p>;
 
   return (
     <Table>
