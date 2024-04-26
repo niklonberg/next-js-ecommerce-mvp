@@ -60,6 +60,6 @@ export async function toggleProductPurchasable(
 }
 
 export async function deleteProduct(id: string) {
-  const product = db.product.delete({ where: { id } });
+  const product = await db.product.delete({ where: { id } });
   if (!product) return notFound();
 }
