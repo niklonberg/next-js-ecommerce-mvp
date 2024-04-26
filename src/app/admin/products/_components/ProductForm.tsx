@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { addProduct } from "@/app/admin/_actions/products";
 import { useFormStatus, useFormState } from "react-dom";
 import { Product } from "@prisma/client";
+import Image from "next/image";
 
 export function ProductForm({ product }: { product?: Product | null }) {
   const [error, action] = useFormState(addProduct, {});
@@ -20,7 +21,13 @@ export function ProductForm({ product }: { product?: Product | null }) {
     <form action={action} className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
-        <Input type="text" id="name" name="name" required />
+        <Input
+          type="text"
+          id="name"
+          name="name"
+          defaultValue={product?.name || ""}
+          required
+        />
         {error.name && <div className="text-destructive">{error.name}</div>}
       </div>
       <div className="space-y-2">
@@ -42,7 +49,12 @@ export function ProductForm({ product }: { product?: Product | null }) {
       </div>
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
-        <Textarea id="description" name="description" required />
+        <Textarea
+          id="description"
+          name="description"
+          defaultValue={product?.description}
+          required
+        />
         {error.description && (
           <div className="text-destructive">{error.description}</div>
         )}
@@ -54,8 +66,13 @@ export function ProductForm({ product }: { product?: Product | null }) {
           type="file"
           id="file"
           name="file"
-          required
+          required={product == null}
         />
+        {product != null && (
+          <div className="text-muted-foreground">
+            Current file: {product.filePath}
+          </div>
+        )}
         {error.file && <div className="text-destructive">{error.file}</div>}
       </div>
       <div className="space-y-2">
@@ -65,8 +82,19 @@ export function ProductForm({ product }: { product?: Product | null }) {
           type="file"
           id="image"
           name="image"
-          required
+          required={product == null}
         />
+        {product != null && (
+          <div>
+            Current image
+            <Image
+              src={product.imagePath}
+              height="200"
+              width="200"
+              alt="product image"
+            />
+          </div>
+        )}
         {error.image && <div className="text-destructive">{error.image}</div>}
       </div>
       <SubmitButton />
