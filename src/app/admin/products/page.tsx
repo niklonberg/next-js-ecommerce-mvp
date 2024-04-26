@@ -29,6 +29,7 @@ export default function AdminProducts() {
 async function ProductsTable() {
   const products = await db.product.findMany({
     select: {
+      id: true,
       purchasable: true,
       name: true,
       createdAt: true,
@@ -62,15 +63,17 @@ async function ProductsTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell></TableCell>
-          <TableCell>How to play tag</TableCell>
-          <TableCell>01/01/24</TableCell>
-          <TableCell>04/01/24</TableCell>
-          <TableCell className="text-center">157</TableCell>
-          <TableCell className="text-right">$20</TableCell>
-          <TableCell></TableCell>
-        </TableRow>
+        {products.map((product) => (
+          <TableRow key={product.id}>
+            <TableCell></TableCell>
+            <TableCell>{product.name}</TableCell>
+            <TableCell>{product.createdAt}</TableCell>
+            <TableCell>04/01/24</TableCell>
+            <TableCell className="text-center">157</TableCell>
+            <TableCell className="text-right">$20</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
