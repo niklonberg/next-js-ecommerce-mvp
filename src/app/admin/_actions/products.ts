@@ -18,7 +18,7 @@ const addSchema = z.object({
   image: imageSchema.refine((file) => file.size > 0, "Filesize is too low"),
 });
 
-export async function addProduct(formData: FormData) {
+export async function addProduct(_prevState: unknown, formData: FormData) {
   const result = addSchema.safeParse(Object.fromEntries(formData.entries()));
   if (result.success === false) return result.error.formErrors.fieldErrors;
 
