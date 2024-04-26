@@ -18,6 +18,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuItem,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import {
   DeleteDropdownItem,
@@ -120,6 +121,7 @@ async function ProductsTable() {
                     id={product.id}
                     purchasable={product.purchasable}
                   />
+                  <DropdownMenuSeparator />
                   <DeleteDropdownItem
                     id={product.id}
                     disabled={product._count.orders > 0}
