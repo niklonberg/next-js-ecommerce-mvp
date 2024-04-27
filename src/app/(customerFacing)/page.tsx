@@ -1,27 +1,32 @@
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import db from "@/db/db";
+import { cache } from "@/lib/cache";
 import { waitTest } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
-function getNewestProducts() {
+const getNewestProducts = cache(() => {
   return db.product.findMany({
     where: { purchasable: true },
     orderBy: { createdAt: "desc" },
     take: 6,
   });
-}
+}, ["/", "getNewestProducts"]);
 
-function getPopularProducts() {
-  return db.product.findMany({
-    where: { purchasable: true },
-    orderBy: { orders: { _count: "desc" } },
-    take: 6,
-  });
-}
+const getPopularProducts = cache(
+  () => {
+    return db.product.findMany({
+      where: { purchasable: true },
+      orderBy: { orders: { _count: "desc" } },
+      take: 6,
+    });
+  },
+  ["/", "getPopularProducts"],
+  { revalidate: 60 * 60 * 24 }
+);
 
 type ProductGridSectionProps = {
   productsFetcher: () => Promise<Product[]>;
