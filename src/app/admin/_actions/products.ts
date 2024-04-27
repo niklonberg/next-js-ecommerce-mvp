@@ -52,6 +52,57 @@ export async function addProduct(_prevState: unknown, formData: FormData) {
   redirect("/admin/products");
 }
 
+const editSchema = addSchema.extend({
+  file: fileSchema.optional(),
+  image: imageSchema.optional(),
+});
+
+export async function updateProduct(
+  id: string,
+  _prevState: unknown,
+  formData: FormData
+) {
+  const result = editSchema.safeParse(Object.fromEntries(formData.entries()));
+  if (result.success === false) return result.error.formErrors.fieldErrors;
+  const newProduct = result.data;
+
+  const productToEdit = await db.product.findUnique({ where: { id } });
+  if (!productToEdit) return notFound();
+
+  let filePath = productToEdit.filePath;
+  if (newProduct.file != null && newProduct.file.size > 0) {
+    await fs.unlink(productToEdit.filePath);
+    filePath = `products/${crypto.randomUUID()}-${newProduct.file.name}`;
+    await fs.writeFile(
+      filePath,
+      Buffer.from(await newProduct.file.arrayBuffer())
+    );
+  }
+
+  let imagePath = productToEdit.imagePath;
+  if (newProduct.image != null && newProduct.image.size > 0) {
+    await fs.unlink(`public/${productToEdit.imagePath}`);
+    imagePath = `/products/${crypto.randomUUID()}-${newProduct.image.name}`;
+    await fs.writeFile(
+      `public${imagePath}`,
+      Buffer.from(await newProduct.image.arrayBuffer())
+    );
+  }
+
+  await db.product.update({
+    where: { id },
+    data: {
+      name: newProduct.name,
+      priceInCents: newProduct.priceInCents,
+      description: newProduct.description,
+      filePath,
+      imagePath,
+    },
+  });
+
+  redirect("/admin/products");
+}
+
 export async function toggleProductPurchasable(
   id: string,
   purchasable: boolean
