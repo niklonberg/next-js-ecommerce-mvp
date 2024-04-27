@@ -18,20 +18,31 @@ function getPopularProducts() {
 }
 
 type ProductGridSectionProps = {
-  productsFetcher: () => Promise<Product>[];
+  productsFetcher: () => Promise<Product[]>;
   title: string;
 };
 
 function ProductGridSection({
   productsFetcher,
   title,
-}: ProductGridSectionProps) {}
+}: ProductGridSectionProps) {
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-4">
+        <h2 className="text-3xl font-bold">{title}</h2>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
     <main className="space-y-10">
-      <ProductGridSection productsFetcher={getPopularProducts} />
-      <ProductGridSection productsFetcher={getNewestProducts} />
+      <ProductGridSection
+        productsFetcher={getPopularProducts}
+        title="Most popular"
+      />
+      <ProductGridSection productsFetcher={getNewestProducts} title="Newest" />
     </main>
   );
 }
