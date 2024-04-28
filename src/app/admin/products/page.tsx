@@ -25,20 +25,6 @@ import {
   ToggleDropdownItemPurchasable,
 } from "./_components/ProductActions";
 
-export default function AdminProducts() {
-  return (
-    <>
-      <div className="flex justify-between items-center gap-4">
-        <PageHeader>Products</PageHeader>
-        <Button asChild>
-          <Link href="/admin/products/new">Add Product</Link>
-        </Button>
-      </div>
-      <ProductsTable />
-    </>
-  );
-}
-
 async function ProductsTable() {
   const products = await db.product.findMany({
     select: {
@@ -133,6 +119,20 @@ async function ProductsTable() {
         ))}
       </TableBody>
     </Table>
+  );
+}
+
+export default function AdminProductsPage() {
+  return (
+    <>
+      <div className="flex justify-between items-center gap-4">
+        <PageHeader>Products</PageHeader>
+        <Button asChild>
+          <Link href="/admin/products/new">Add Product</Link>
+        </Button>
+      </div>
+      <ProductsTable />
+    </>
   );
 }
 

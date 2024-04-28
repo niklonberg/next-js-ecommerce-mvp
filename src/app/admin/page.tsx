@@ -71,7 +71,7 @@ async function getProductAvailabilityData() {
   };
 }
 
-export default async function AdminDashboard() {
+export default async function AdminDashboardPage() {
   const [salesData, customerData, productData] = await Promise.all([
     getSalesData(),
     getCustomerData(),
