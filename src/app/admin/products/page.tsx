@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/table";
 import db from "@/db/db";
 import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
-import { formatCurrency } from "@/lib/formatters";
+import { formatCurrency, formatDateISO } from "@/lib/formatters";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -134,12 +134,4 @@ export default function AdminProductsPage() {
       <ProductsTable />
     </>
   );
-}
-
-function formatDateISO(dateISO: Date) {
-  return dateISO.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  });
 }
