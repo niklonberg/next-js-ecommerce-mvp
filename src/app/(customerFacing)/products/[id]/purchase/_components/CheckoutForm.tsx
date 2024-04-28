@@ -1,5 +1,14 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { formatCurrency } from "@/lib/formatters";
 import {
   Elements,
@@ -49,14 +58,33 @@ export function CheckoutForm({ product, clientSecret }: CheckoutFormProps) {
         </div>
       </div>
       <Elements options={{ clientSecret }} stripe={stripePromise}>
-        <Form />
+        <Form priceInCents={product.priceInCents} />
       </Elements>
     </div>
   );
 }
 
-function Form() {
+function Form({ priceInCents }: { priceInCents: number }) {
   const stripe = useStripe();
   const elements = useElements();
-  return <PaymentElement />;
+  return (
+    <form>
+      <Card>
+        <CardHeader>
+          <CardTitle>Checkout</CardTitle>
+          <CardDescription className="text-destructive">
+            Error msg goes here
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <PaymentElement />
+        </CardContent>
+        <CardFooter>
+          <Button className="w-full" size="lg" disabled={!stripe || !elements}>
+            Purchase - {formatCurrency(priceInCents / 100)}
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
+  );
 }
