@@ -71,11 +71,12 @@ function Form({ priceInCents }: { priceInCents: number }) {
   const elements = useElements();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string>();
+  const [email, setEmail] = useState<string>();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (!stripe || !elements) return;
+    if (!stripe || !elements || !email) return;
 
     setIsLoading(true);
 
@@ -111,7 +112,10 @@ function Form({ priceInCents }: { priceInCents: number }) {
         </CardHeader>
         <CardContent>
           <PaymentElement />
-          <LinkAuthenticationElement className="mt-6" />
+          <LinkAuthenticationElement
+            className="mt-6"
+            onChange={(e) => setEmail(e.value.email)}
+          />
         </CardContent>
         <CardFooter>
           <Button
