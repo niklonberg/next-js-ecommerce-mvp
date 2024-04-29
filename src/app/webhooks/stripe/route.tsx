@@ -4,7 +4,7 @@ import { Resend } from "resend";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
-const resend = new Resend();
+const resend = new Resend(process.env.RESEND_API_KEY as string);
 
 export async function POST(req: NextRequest) {
   const event = await stripe.webhooks.constructEvent(
@@ -44,5 +44,14 @@ export async function POST(req: NextRequest) {
         expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
       },
     });
+
+    resend.emails.send({
+      from: `Support <${process.env.SENDER_EMAIL}>`,
+      to: email,
+      subject: "Order Confirmation",
+      react: <h1>Hi</h1>,
+    });
+
+    return new NextResponse();
   }
 }
