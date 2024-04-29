@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
       subject: "Order Confirmation",
       react: <h1>Hi</h1>,
     });
-
-    return new NextResponse();
   }
+
+  return new NextResponse();
 }
