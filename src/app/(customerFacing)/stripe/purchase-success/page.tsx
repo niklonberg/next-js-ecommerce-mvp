@@ -8,6 +8,17 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
+async function createDownloadVerification(productId: string) {
+  return (
+    await db.downloadVerification.create({
+      data: {
+        productId,
+        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 48),
+      },
+    })
+  ).id;
+}
+
 export default async function SuccessPage({
   searchParams,
 }: {
@@ -66,15 +77,4 @@ export default async function SuccessPage({
       </div>
     </div>
   );
-}
-
-async function createDownloadVerification(productId: string) {
-  return (
-    await db.downloadVerification.create({
-      data: {
-        productId,
-        expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 48),
-      },
-    })
-  ).id;
 }
