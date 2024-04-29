@@ -111,7 +111,7 @@ function Form({
         if (error.type === "card_error" || error.type === "validation_error") {
           setErrorMsg(error.message);
         } else {
-          setErrorMsg("An unexpected error occured. Please try again");
+          setErrorMsg("An unexpected error occured. Please try again.");
         }
       })
       .finally(() => setIsLoading(false));
