@@ -12,6 +12,7 @@ import {
 import { formatCurrency } from "@/lib/formatters";
 import {
   Elements,
+  LinkAuthenticationElement,
   PaymentElement,
   useElements,
   useStripe,
@@ -110,6 +111,7 @@ function Form({ priceInCents }: { priceInCents: number }) {
         </CardHeader>
         <CardContent>
           <PaymentElement />
+          <LinkAuthenticationElement className="mt-6" />
         </CardContent>
         <CardFooter>
           <Button
