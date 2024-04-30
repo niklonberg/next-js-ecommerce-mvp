@@ -3,6 +3,7 @@
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { deleteUser } from "../../_actions/users";
 
 export async function DeleteDropdownItem({ id }: { id: string }) {
   const [isPending, startTransition] = useTransition();
