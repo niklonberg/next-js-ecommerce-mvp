@@ -18,7 +18,15 @@ import { MoreVertical } from "lucide-react";
 import { PageHeader } from "../_components/PageHeader";
 
 async function getOrders() {
-  return await db.order.findMany({});
+  return await db.order.findMany({
+    select: {
+      id: true,
+      pricePaidInCents: true,
+      createdAt: true,
+      product: { select: { name: true } },
+      user: { select: { email: true } },
+    },
+  });
 }
 
 async function OrdersTable() {
@@ -32,8 +40,9 @@ async function OrdersTable() {
       <TableHeader>
         <TableRow>
           <TableHead>Product</TableHead>
-          <TableHead>Purchased</TableHead>
+          <TableHead>Purchase date</TableHead>
           <TableHead>Price</TableHead>
+          <TableHead>Purchased by</TableHead>
           <TableHead>
             <span className="sr-only">Actions</span>
           </TableHead>
@@ -42,20 +51,23 @@ async function OrdersTable() {
       <TableBody>
         {orders.map((order) => (
           <TableRow key={order.id}>
-            <TableCell>product name here</TableCell>
+            <TableCell>{order.product.name}</TableCell>
             <TableCell>{formatDateISO(order.createdAt)}</TableCell>
             <TableCell>
               {formatCurrency(order.pricePaidInCents / 100)}
             </TableCell>
-            {/* <TableCell>
+            <TableCell>{order.user.email}</TableCell>
+            <TableCell>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <MoreVertical />
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent></DropdownMenuContent>
+                <DropdownMenuContent>
+                  <DeleteDropdownItem id={order.id} />
+                </DropdownMenuContent>
               </DropdownMenu>
-            </TableCell> */}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
