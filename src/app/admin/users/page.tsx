@@ -14,7 +14,6 @@ import { MoreVertical } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteDropdownItem } from "./_components/UserActions";
@@ -65,7 +64,7 @@ async function UsersTable() {
                     <span className="sr-only">Actions</span>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DeleteDropdownItem />
+                    <DeleteDropdownItem id={user.id} />
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
