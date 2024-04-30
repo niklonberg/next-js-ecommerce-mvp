@@ -2,7 +2,6 @@ import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import db from "@/db/db";
 import { cache } from "@/lib/cache";
-import { waitTest } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
