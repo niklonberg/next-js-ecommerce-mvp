@@ -25,8 +25,8 @@ import {
   ToggleDropdownItemPurchasable,
 } from "./_components/ProductActions";
 
-async function ProductsTable() {
-  const products = await db.product.findMany({
+async function getProducts() {
+  return await db.product.findMany({
     select: {
       id: true,
       purchasable: true,
@@ -38,9 +38,10 @@ async function ProductsTable() {
     },
     orderBy: { name: "asc" },
   });
+}
 
-  console.log(products);
-
+async function ProductsTable() {
+  const products = await getProducts();
   if (products.length === 0) return <p>No products found</p>;
 
   return (
