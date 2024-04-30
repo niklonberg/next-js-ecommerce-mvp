@@ -39,8 +39,8 @@ async function UsersTable() {
       <TableHeader>
         <TableRow>
           <TableHead>Id</TableHead>
-          <TableHead>Orders</TableHead>
           <TableHead>Email</TableHead>
+          <TableHead>Orders</TableHead>
           <TableHead>Value</TableHead>
           <TableHead>
             <span className="sr-only">Actions</span>
@@ -56,8 +56,8 @@ async function UsersTable() {
           return (
             <TableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
-              <TableCell>{user.orders.length}</TableCell>
               <TableCell>{user.email}</TableCell>
+              <TableCell>{user.orders.length}</TableCell>
               <TableCell>{formatCurrency(pricePaidInCents / 100)}</TableCell>
               <TableCell>
                 <DropdownMenu>
