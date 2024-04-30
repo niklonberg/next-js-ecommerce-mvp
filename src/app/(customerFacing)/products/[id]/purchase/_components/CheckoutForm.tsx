@@ -92,7 +92,7 @@ function Form({
 
     if (orderExists) {
       setErrorMsg(
-        `You have already purchased this Product. Go to 'My Orders' to download the files.`
+        `You have already purchased this product. Go to 'My Orders' to download the files.`
       );
       setIsLoading(false);
       return;
