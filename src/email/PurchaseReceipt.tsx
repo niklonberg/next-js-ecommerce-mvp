@@ -13,10 +13,24 @@ type PurchaseReceiptEmailProps = {
   product: {
     name: string;
   };
+  order: { id: string; createdAt: Date; pricePaidInCents: number };
+  downloadVerificationId: string;
 };
+
+PurchaseReceiptEmail.PreviewProps = {
+  product: { name: "Product name" },
+  order: {
+    id: crypto.randomUUID(),
+    createdAt: new Date(),
+    pricePaidInCents: 20000,
+  },
+  downloadVerificationId: crypto.randomUUID(),
+} satisfies PurchaseReceiptEmailProps;
 
 export default function PurchaseReceiptEmail({
   product,
+  order,
+  downloadVerificationId,
 }: PurchaseReceiptEmailProps) {
   return (
     <Html>
@@ -26,7 +40,11 @@ export default function PurchaseReceiptEmail({
         <Body className="font-sans bg-white">
           <Container className="max-w-xl">
             <Heading>Purchase Receipt</Heading>
-            <OrderInformation></OrderInformation>
+            <OrderInformation
+              product={product}
+              order={order}
+              downloadVerificationId={downloadVerificationId}
+            />
           </Container>
         </Body>
       </Tailwind>
