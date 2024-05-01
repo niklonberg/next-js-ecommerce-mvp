@@ -9,7 +9,15 @@ import {
 } from "@react-email/components";
 import { OrderInformation } from "./_components/OrderInformation";
 
-export default function PurchaseReceiptEmail({ product }: { name: string }) {
+type PurchaseReceiptEmailProps = {
+  product: {
+    name: string;
+  };
+};
+
+export default function PurchaseReceiptEmail({
+  product,
+}: PurchaseReceiptEmailProps) {
   return (
     <Html>
       <Preview>Download {product.name} and view receipt</Preview>
