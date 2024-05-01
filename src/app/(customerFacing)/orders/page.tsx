@@ -1,5 +1,6 @@
 "use client";
 
+import { emailOrderHistory } from "@/actions/orders";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,8 +15,9 @@ import { Label } from "@/components/ui/label";
 import { useFormState, useFormStatus } from "react-dom";
 
 export default function MyOrdersPage() {
+  const [data, action] = useFormState(emailOrderHistory, {});
   return (
-    <form className="max-w-3xl mx-auto">
+    <form action={action} className="max-w-3xl mx-auto">
       <Card>
         <CardHeader>
           <CardTitle className="mb-2">My Orders</CardTitle>
@@ -27,11 +29,12 @@ export default function MyOrdersPage() {
         <CardContent>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input type="email" required name="email" id="email"></Input>
+            <Input type="email" required name="email" id="email" />
+            {data.error && <div className="text-destructive">{data.error}</div>}
           </div>
         </CardContent>
         <CardFooter>
-          <SubmitButton />
+          {data.message ? <p>{data.message}</p> : <SubmitButton />}
         </CardFooter>
       </Card>
     </form>

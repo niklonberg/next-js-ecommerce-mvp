@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/db/db";
+import OrderHistoryEmail from "@/email/OrderHistory";
 import { Resend } from "resend";
 import { z } from "zod";
 
@@ -43,15 +44,17 @@ export async function emailOrderHistory(
         "Check your email to view your order history and download your products.",
     };
 
-  const orders = user.orders.map((order) => {
+  const orders = user.orders.map(async (order) => {
     return {
       ...order,
-      downloadVerificationId: db.downloadVerification.create({
-        data: {
-          expiresAt: new Date(Date.now() + 24 * 1000 * 60 * 60 * 24),
-          productId: order.product.id,
-        },
-      }),
+      downloadVerificationId: (
+        await db.downloadVerification.create({
+          data: {
+            expiresAt: new Date(Date.now() + 24 * 1000 * 60 * 60 * 24),
+            productId: order.product.id,
+          },
+        })
+      ).id,
     };
   });
 
@@ -59,7 +62,7 @@ export async function emailOrderHistory(
     from: `Support <${process.env.SENDER_EMAIL}>`,
     to: user.email,
     subject: "Order History",
-    react: <OrderHistoryEmail />,
+    react: <OrderHistoryEmail orders={await Promise.all(orders)} />,
   });
 
   if (data.error)
