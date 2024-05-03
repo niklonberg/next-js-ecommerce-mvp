@@ -79,7 +79,7 @@ export async function updateProduct(
 
   let filePath = productToEdit.filePath;
   if (newProduct.file != null && newProduct.file.size > 0) {
-    await fs.unlink(productToEdit.filePath);
+    if (filePath) await fs.unlink(productToEdit.filePath);
     filePath = `products/${crypto.randomUUID()}-${newProduct.file.name}`;
     await fs.writeFile(
       filePath,
@@ -89,7 +89,7 @@ export async function updateProduct(
 
   let imagePath = productToEdit.imagePath;
   if (newProduct.image != null && newProduct.image.size > 0) {
-    await fs.unlink(`public/${productToEdit.imagePath}`);
+    if (imagePath) await fs.unlink(`public/${productToEdit.imagePath}`);
     imagePath = `/products/${crypto.randomUUID()}-${newProduct.image.name}`;
     await fs.writeFile(
       `public${imagePath}`,
