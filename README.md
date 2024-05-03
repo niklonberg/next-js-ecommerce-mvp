@@ -1,38 +1,27 @@
+## Mock ecommerce NextJS app
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-test line
+A mock e-commerce site, built with NextJS, Tailwind, Resend, some Shadcn-UI components, Stripe payment & Prisma PostgreSQL database. Both site & database is hosted on vercel.
+Has an admin subroute accessible at /admin - the admin and password login should be quite easy to guess! Hint hint ;)
 
-## Getting Started
+# Page  
+This site is hosted via vercel, and can be found here: https://next-js-ecommerce-mvp-nu.vercel.app/  
 
-First, run the development server:
+# Features  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The admin subroute has a dashboard, showing statistics for products, orders & customers. Its possible to edit/delete these, and create new products.  
+Products are required to have a file (the product) and an image before a product can be created. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Unfortunately this does not work remotely, as it uses the filesystem and writes to /products & /public/products folders, which doesnt really work for websites, but it worked remotely as I was working. Lesson learned! In the future i would either store those two things in the database aswell, or use something like Google cloud storage and have them serve it via their cdns.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The main site has a homepage, products page & my orders page.
+Homepage has "Most popular" & "Newest products" sections, which filters based on purchase count and date added respectively.  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Clicking purchase takes the user to dynamically route /products/[productId]/purchase, where Stripe checkout is possible, which handles all the form validation.  
 
-## Learn More
+On purchase success user is taken to /stripe/purchase-success/, where the user can download the product. This worked locally, but clicking download unfortunately yields a server error that I have been unable to fix.
+The user would also get an order confirmation email sent via Resend.
 
-To learn more about Next.js, take a look at the following resources:
+My orders lets user input their email, and if they have any orders they will receive an email with those orders via Resend. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+May at some point return to this project and see if I can get more things working, but it was fun and I felt I got yet more practice with deploying, working databases and making an app with NextJS and understand its file/route system.
