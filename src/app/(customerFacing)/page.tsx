@@ -7,25 +7,21 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
-const getNewestProducts = cache(() => {
+const getNewestProducts = () => {
   return db.product.findMany({
     where: { purchasable: true },
     orderBy: { createdAt: "desc" },
     take: 6,
   });
-}, ["/", "getNewestProducts"]);
+};
 
-const getPopularProducts = cache(
-  () => {
-    return db.product.findMany({
-      where: { purchasable: true },
-      orderBy: { orders: { _count: "desc" } },
-      take: 6,
-    });
-  },
-  ["/", "getPopularProducts"],
-  { revalidate: 60 * 60 * 24 }
-);
+const getPopularProducts = () => {
+  return db.product.findMany({
+    where: { purchasable: true },
+    orderBy: { orders: { _count: "desc" } },
+    take: 6,
+  });
+};
 
 type ProductGridSectionProps = {
   productsFetcher: () => Promise<Product[]>;
