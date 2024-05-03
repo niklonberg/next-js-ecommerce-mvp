@@ -17,7 +17,7 @@ Unfortunately this does not work remotely, as it uses the filesystem and writes 
 The main site has a homepage, products page & my orders page.
 Homepage has "Most popular" & "Newest products" sections, which filters based on purchase count and date added respectively.  
 
-Clicking purchase takes the user to dynamically route /products/[productId]/purchase, where Stripe checkout is possible, which handles all the form validation.  
+Clicking purchase takes the user to dynamically routed /products/[productId]/purchase, where Stripe checkout is possible, which handles all the form validation.  
 
 On purchase success user is taken to /stripe/purchase-success/, where the user can download the product. This worked locally, but clicking download unfortunately yields a server error that I have been unable to fix.
 The user would also get an order confirmation email sent via Resend.
